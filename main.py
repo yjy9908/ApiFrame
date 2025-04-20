@@ -1,16 +1,19 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import pytest
+import subprocess
+import datetime
+from utils.oprateLog import wirte_log
 
 
-# Press the green button in the gutter to run the script.
+
+
+'''
+执行所有测试用例入口
+使用allure生成测试报告
+'''
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    # 生成时间戳
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H_%M_%S')
+    pytest.main(["-s","-v","tests/","--alluredir",f"./report/{timestamp}_report/result"])
+    subprocess.call(f'allure generate report/{timestamp}_report/result/ -o report/{timestamp}_report/html --clean',shell=True)
+    wirte_log('生成测试报告')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
